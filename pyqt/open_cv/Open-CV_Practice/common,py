@@ -1,0 +1,39 @@
+import cv2
+import numpy as np
+
+# 1. Load the original image
+image = cv2.imread('cat.jpg')  # Replace with your own image path
+# At this point, 'image' is a color image in BGR format.
+
+# 2. Convert the color image to grayscale
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# This simplifies the image to shades of gray, removing color information.
+
+# 3. Resize the grayscale image to fixed dimensions (width=280, height=500)
+resized_image = cv2.resize(gray_image, (280, 500))
+# Standardizes the size for consistent processing and output.
+
+# 4. Convert the grayscale (single channel) back to BGR
+# This allows adding colored text (OpenCV text works with 3-channel images)
+text_image = cv2.cvtColor(resized_image, cv2.COLOR_GRAY2BGR)
+
+# 5. Set text parameters
+text = "OMOTEC Project"
+position = (20, 50)              # (x, y) position for text
+font = cv2.FONT_HERSHEY_SIMPLEX  # Font style
+font_scale = 1                   # Text size
+color = (0, 255, 0)              # Green color (B, G, R)
+thickness = 3                    # Line thickness of the text
+
+# 6. Draw the text on the image
+cv2.putText(text_image, text, position, font, font_scale, color, thickness)
+
+# 7. Save the final processed image to disk
+cv2.imwrite('processed_image.jpg', text_image)
+
+# 8. Display all images for comparison
+cv2.imshow('Original Image', image)         # Original BGR image
+cv2.imshow('Grayscale Resized', resized_image)  # Grayscale resized image
+cv2.imshow('Final Image', text_image)       # Final image with text
+cv2.waitKey(0)            # Wait for a key press to close windows
+cv2.destroyAllWindows()   # Close all OpenCV windows
